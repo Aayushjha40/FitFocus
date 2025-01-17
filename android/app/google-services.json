@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229968319813",
+    "project_id": "fitfocus-334b7",
+    "storage_bucket": "fitfocus-334b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229968319813:android:60207476a1edf8422b9a2c",
+        "android_client_info": {
+          "package_name": "com.example.fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdJQOhePy7YEPX99mqVnbVAdGwaEsLQ10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
