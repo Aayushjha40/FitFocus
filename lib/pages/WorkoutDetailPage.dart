@@ -11,15 +11,15 @@ class WorkoutDetailPage extends StatefulWidget {
 }
 
 class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
 
-  // Initialize the video controller if needed
   @override
   void initState() {
     super.initState();
 
+    // Initialize the video controller only for specific workout
     if (widget.workoutName == 'Running') {
-      _controller = VideoPlayerController.asset('assets/videos/running.mp4') // Replace with video path
+      _controller = VideoPlayerController.asset('assets/videos/running.mp4')
         ..initialize().then((_) {
           setState(() {});
         });
@@ -28,51 +28,139 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
 
   @override
   void dispose() {
+    // Dispose the controller if it is initialized
+    if (_controller != null) {
+      _controller!.dispose();
+    }
     super.dispose();
-    _controller.dispose(); // Dispose the controller when done
   }
 
   @override
   Widget build(BuildContext context) {
     String workoutDetails = '';
     String imagePath = '';
-    Widget videoPlayer = SizedBox(); // Placeholder for video
+    Widget videoPlayer = SizedBox(); // Placeholder widget for video
 
     switch (widget.workoutName) {
       case 'Push Ups':
-        workoutDetails = 'Push-ups are a bodyweight exercise that targets the chest, shoulders, and triceps. It helps build upper body strength and endurance.';
+        workoutDetails = '''
+Push-ups are a fundamental bodyweight exercise that targets the chest, shoulders, and triceps. They help build upper body strength and endurance while also engaging core muscles for stabilization.
+        
+**Steps:**
+1. Start in a plank position with your hands shoulder-width apart.
+2. Lower your body until your chest nearly touches the floor.
+3. Push back up to the starting position.
+        
+**Benefits:**
+- Improves upper body strength.
+- Enhances core stability.
+- Boosts cardiovascular endurance.
+        ''';
         imagePath = 'assets/images/pushups.png';
         break;
+
       case 'Squats':
-        workoutDetails = 'Squats are a compound exercise that primarily targets the quads, hamstrings, and glutes. They help in building lower body strength and stability.';
+        workoutDetails = '''
+Squats are a powerful compound exercise that primarily targets the quads, hamstrings, and glutes. They improve lower body strength, balance, and flexibility.
+
+**Steps:**
+1. Stand with your feet shoulder-width apart.
+2. Lower your hips as if sitting into a chair.
+3. Keep your chest up and knees over your toes.
+4. Push back up to the starting position.
+
+**Benefits:**
+- Strengthens lower body muscles.
+- Improves mobility and posture.
+- Boosts functional fitness.
+        ''';
         imagePath = 'assets/images/squats.png';
         break;
+
       case 'Lunges':
-        workoutDetails = 'Lunges work your legs, particularly the glutes, quads, and hamstrings. They are great for building strength and improving balance.';
+        workoutDetails = '''
+Lunges are an excellent lower body exercise that improves strength, stability, and balance.
+
+**Steps:**
+1. Step forward with one leg and lower your body until both knees are bent at 90 degrees.
+2. Push back to the starting position and repeat on the other leg.
+
+**Benefits:**
+- Strengthens quads, glutes, and hamstrings.
+- Improves balance and coordination.
+- Enhances flexibility.
+        ''';
         imagePath = 'assets/images/lunges.png';
         break;
+
       case 'Burpees':
-        workoutDetails = 'Burpees are a full-body exercise that targets multiple muscle groups, including the chest, arms, and legs. They improve strength, endurance, and agility.';
+        workoutDetails = '''
+Burpees are a full-body exercise that targets multiple muscle groups and enhances cardiovascular endurance.
+
+**Steps:**
+1. Begin in a standing position.
+2. Drop into a squat with your hands on the ground.
+3. Kick your feet back into a plank position.
+4. Perform a push-up, then return to the squat.
+5. Jump explosively into the air.
+
+**Benefits:**
+- Burns a lot of calories.
+- Improves strength and endurance.
+- Boosts agility and coordination.
+        ''';
         imagePath = 'assets/images/burpees.png';
         break;
+
       case 'Plank':
-        workoutDetails = 'The plank is an isometric exercise that strengthens the core muscles, improving posture and stability.';
+        workoutDetails = '''
+The plank is an isometric exercise that strengthens the core muscles, improving posture, stability, and endurance.
+
+**Steps:**
+1. Lie face down with your elbows directly under your shoulders.
+2. Lift your body into a straight line from head to heels.
+3. Hold this position, engaging your core.
+
+**Benefits:**
+- Builds core strength.
+- Improves posture.
+- Enhances overall stability.
+        ''';
         imagePath = 'assets/images/plank.png';
         break;
+
       case 'Running':
-        workoutDetails = 'Running is a cardiovascular exercise that improves endurance and targets the lower body muscles.';
+        workoutDetails = '''
+Running is a fantastic cardiovascular exercise that strengthens your heart and lungs, while also targeting the lower body muscles.
+
+**Benefits:**
+- Improves cardiovascular endurance.
+- Strengthens leg muscles.
+- Helps in weight management.
+
+Watch the video below for proper running techniques.
+        ''';
         imagePath = 'assets/images/running.png';
-        videoPlayer = _controller.value.isInitialized
+        videoPlayer = _controller != null && _controller!.value.isInitialized
             ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+                aspectRatio: _controller!.value.aspectRatio,
+                child: VideoPlayer(_controller!),
               )
-            : Container(); // Video placeholder
+            : SizedBox();
         break;
+
       case 'Cycling':
-        workoutDetails = 'Cycling is an excellent cardiovascular exercise that strengthens the lower body and improves endurance.';
+        workoutDetails = '''
+Cycling is a low-impact exercise that improves cardiovascular health and strengthens the lower body muscles.
+
+**Benefits:**
+- Increases stamina and endurance.
+- Strengthens leg and glute muscles.
+- Reduces joint stress compared to high-impact exercises.
+        ''';
         imagePath = 'assets/images/cycling.png';
         break;
+
       default:
         workoutDetails = 'No information available for this workout.';
         imagePath = ''; // No image
@@ -93,19 +181,31 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              // Displaying Image
+              // Displaying image
               imagePath.isNotEmpty
                   ? Image.asset(imagePath)
-                  : SizedBox(height: 200), // Placeholder if no image is available
+                  : SizedBox(height: 200, child: Placeholder()),
               SizedBox(height: 20),
               Text(
                 workoutDetails,
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 20),
-              // Display Video if it's Running
+              // Display video player for Running workout
               videoPlayer,
-              SizedBox(height: 20),
+              if (_controller != null && _controller!.value.isInitialized)
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _controller!.value.isPlaying
+                          ? _controller!.pause()
+                          : _controller!.play();
+                    });
+                  },
+                  child: Text(
+                    _controller!.value.isPlaying ? 'Pause Video' : 'Play Video',
+                  ),
+                ),
             ],
           ),
         ),

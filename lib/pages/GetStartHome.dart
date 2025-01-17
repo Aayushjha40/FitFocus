@@ -40,14 +40,19 @@ class Getstarthome extends StatelessWidget {
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.black,
                     textStyle: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18, // Increased font size
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 15), // Increased button height
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded corners
                     ),
                   ),
                   onPressed: () => Navigator.pushNamed(context, '/login'),
                   child: Text('Login'),
                 ),
               ),
-              SizedBox(height: 10), // Add spacing between buttons
+              SizedBox(height: 15), // Add spacing between buttons
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -56,14 +61,19 @@ class Getstarthome extends StatelessWidget {
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.black,
                     textStyle: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18, // Increased font size
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 15), // Increased button height
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded corners
                     ),
                   ),
                   onPressed: () => Navigator.pushNamed(context, '/signup'),
                   child: Text('Sign Up'),
                 ),
               ),
-              SizedBox(height: 20), // Add spacing at the bottom
+              SizedBox(height: 30), // Add spacing at the bottom
             ],
           ),
         ],
